@@ -25,6 +25,7 @@ namespace ComplainStateMachine.classes
 
         public StateMachineClass(State _state)
         {
+
             _machine = new StateMachine<State, Trigger>(_state);
 
             _machine.Configure(State.Waiting)
