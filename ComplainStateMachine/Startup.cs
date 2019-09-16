@@ -25,6 +25,9 @@ namespace ComplainStateMachine
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(); // Make sure you call this previous to AddMvc
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -35,12 +38,11 @@ namespace ComplainStateMachine
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseHsts();
-            }
-
-            app.UseHttpsRedirection();
+            
+            app.UseCors(
+         options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+     ); ; ;
+          
             app.UseMvc();
         }
     }

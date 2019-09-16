@@ -20,9 +20,6 @@ namespace ComplainStateMachine.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            StateMachineClass _machineState = new StateMachineClass(State.Waiting);
-            _machineState.viewcase();
-            _machineState.finishcase();
             return new string[] { "value1", "value2" };
         }
 

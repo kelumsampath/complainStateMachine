@@ -4,21 +4,25 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using static ComplainStateMachine.models.stateClass;
 
 namespace ComplainStateMachine.classes
 {
     public class StateMachineClass
     {
         public enum State
-        {
+        {   New,
             Waiting,
-            View,
-            Closed
+            Process,
+            Finished,
+            Rejected,
+            Success
         }
         public enum Trigger
-        {
-            Preview,
-            Finish
+        {   
+           MoveForward,
+           MoveBackward,
+           ProcessInside
         }
 
         private readonly StateMachine<State, Trigger> _machine;
@@ -28,23 +32,68 @@ namespace ComplainStateMachine.classes
 
             _machine = new StateMachine<State, Trigger>(_state);
 
+            _machine.Configure(State.New)
+                .Permit(Trigger.MoveForward, State.Waiting);
+
             _machine.Configure(State.Waiting)
-                .Permit(Trigger.Preview, State.View);
+                .Permit(Trigger.ProcessInside, State.Process);
 
-            _machine.Configure(State.Closed)
-                .Permit(Trigger.Finish, State.Closed);
+            _machine.Configure(State.Process)
+                .Permit(Trigger.ProcessInside, State.Finished)
+                .Permit(Trigger.MoveForward, State.Rejected)
+                .Permit(Trigger.MoveBackward,State.Waiting);
+
+            _machine.Configure(State.Finished)
+                .Permit(Trigger.MoveForward, State.Rejected)
+                .Permit(Trigger.MoveForward, State.Success);
+
+            _machine.Configure(State.Rejected)
+                .Permit(Trigger.MoveBackward, State.Waiting);
         }
 
-        public void viewcase()
+        public complainState CaseMoveForward()
         {
-            _machine.Fire(Trigger.Preview);
-            Debug.WriteLine("my state machine Trigger: Trigger.Preview");
-            
+            String PreviousState = _machine.State.ToString();
+            _machine.Fire(Trigger.MoveForward);
+            String NewState = _machine.State.ToString();
+            Debug.WriteLine("my state machine Trigger: CaseMoveForward");
+           
+            complainState cs = new complainState
+            {
+                _cState = PreviousState,
+                _newState= NewState
+            };
+            return cs;
         }
-        public void finishcase()
+        public complainState CaseMoveBackward()
         {
-            _machine.Fire(Trigger.Finish);
-            Debug.WriteLine("my state machine Trigger: Trigger.Finish");
+            String PreviousState = _machine.State.ToString();
+            _machine.Fire(Trigger.MoveBackward);
+            String NewState = _machine.State.ToString();
+            Debug.WriteLine("my state machine Trigger: CaseMoveBackward");
+
+            complainState cs = new complainState
+            {
+                _cState = PreviousState,
+                _newState = NewState
+            };
+            return cs;
         }
+        public complainState CaseForwardInternal()
+        {
+            String PreviousState = _machine.State.ToString();
+            _machine.Fire(Trigger.ProcessInside);
+            String NewState = _machine.State.ToString();
+            Debug.WriteLine("my state machine Trigger: CaseForwardInternal");
+
+            complainState cs = new complainState
+            {
+                _cState = PreviousState,
+                _newState = NewState
+            };
+            return cs;
+        }
+
+
     }
 }
