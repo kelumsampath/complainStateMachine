@@ -11,7 +11,7 @@ namespace ComplainStateMachine.classes
     public class StateMachineClass
     {
         public enum State
-        {   New,
+        { New,
             Waiting,
             Process,
             Finished,
@@ -19,10 +19,10 @@ namespace ComplainStateMachine.classes
             Success
         }
         public enum Trigger
-        {   
-           MoveForward,
-           MoveBackward,
-           ProcessInside
+        {
+            MoveForward,
+            MoveBackward,
+            ProcessInside
         }
 
         private readonly StateMachine<State, Trigger> _machine;
@@ -41,57 +41,95 @@ namespace ComplainStateMachine.classes
             _machine.Configure(State.Process)
                 .Permit(Trigger.ProcessInside, State.Finished)
                 .Permit(Trigger.MoveForward, State.Rejected)
-                .Permit(Trigger.MoveBackward,State.Waiting);
+                .Permit(Trigger.MoveBackward, State.Waiting);
 
             _machine.Configure(State.Finished)
-                .Permit(Trigger.MoveForward, State.Rejected)
                 .Permit(Trigger.MoveForward, State.Success);
 
             _machine.Configure(State.Rejected)
                 .Permit(Trigger.MoveBackward, State.Waiting);
         }
-
+        
         public complainState CaseMoveForward()
         {
             String PreviousState = _machine.State.ToString();
-            _machine.Fire(Trigger.MoveForward);
-            String NewState = _machine.State.ToString();
-            Debug.WriteLine("my state machine Trigger: CaseMoveForward");
-           
-            complainState cs = new complainState
+            try
             {
-                _cState = PreviousState,
-                _newState= NewState
-            };
-            return cs;
+                _machine.Fire(Trigger.MoveForward);
+                String NewState = _machine.State.ToString();
+                Debug.WriteLine("my state machine Trigger: CaseMoveForward");
+
+                complainState cs = new complainState
+                {
+                    _cState = PreviousState,
+                    _newState = NewState
+                };
+                return cs;
+            }
+            catch(InvalidOperationException e)
+            {
+                complainState cs = new complainState
+                {
+                    _cState = "error",
+                    _newState = "error"
+                };
+                return cs;
+            }
+           
+            
         }
-        public complainState CaseMoveBackward()
+    
+public complainState CaseMoveBackward()
         {
             String PreviousState = _machine.State.ToString();
-            _machine.Fire(Trigger.MoveBackward);
-            String NewState = _machine.State.ToString();
-            Debug.WriteLine("my state machine Trigger: CaseMoveBackward");
-
-            complainState cs = new complainState
+            try
             {
-                _cState = PreviousState,
-                _newState = NewState
-            };
-            return cs;
+                _machine.Fire(Trigger.MoveBackward);
+                String NewState = _machine.State.ToString();
+                Debug.WriteLine("my state machine Trigger: CaseMoveBackward");
+
+                complainState cs = new complainState
+                {
+                    _cState = PreviousState,
+                    _newState = NewState
+                };
+                return cs;
+            }
+            catch (InvalidOperationException e)
+            {
+                complainState cs = new complainState
+                {
+                    _cState = "error",
+                    _newState = "error"
+                };
+                return cs;
+            }
         }
         public complainState CaseForwardInternal()
         {
             String PreviousState = _machine.State.ToString();
-            _machine.Fire(Trigger.ProcessInside);
-            String NewState = _machine.State.ToString();
-            Debug.WriteLine("my state machine Trigger: CaseForwardInternal");
-
-            complainState cs = new complainState
+            try
             {
-                _cState = PreviousState,
-                _newState = NewState
-            };
-            return cs;
+                _machine.Fire(Trigger.ProcessInside);
+                String NewState = _machine.State.ToString();
+                Debug.WriteLine("my state machine Trigger: CaseForwardInternal");
+
+                complainState cs = new complainState
+                {
+                    _cState = PreviousState,
+                    _newState = NewState
+                };
+                return cs;
+            }
+            catch (InvalidOperationException e)
+            {
+                complainState cs = new complainState
+                {
+                    _cState = "error",
+                    _newState = "error"
+                };
+                return cs;
+            }
         }
 
 
