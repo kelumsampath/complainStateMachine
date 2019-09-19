@@ -1,0 +1,15 @@
+{
+  "Trigger": [
+    "MoveForward",
+    "MoveBackward",
+    "ProcessInside"
+  ],
+  "State": [
+    "New",
+    "Waiting",
+    "Process",
+    "Finished",
+    "Rejected",
+    "Success"
+  ]
+}

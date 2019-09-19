@@ -13,8 +13,8 @@ namespace ComplainStateMachine.models
             public String _cState { get; set; }
             public String _newState { get; set; }
             public String action { get; set; }
-            public  State mystate { get; set; }
-            
+            public String mystate { get; set; }
+
         }
     }
 }
