@@ -39,41 +39,46 @@
             "Name": "Success"
         }
     ],
-    "WorkFlowAction": [
-        {
-            "StateId": 0,
-            "ActionId": 101,
-            "AfterActionStateId": 1
-        },
-        {
-            "StateId": 1,
-            "ActionId": 103,
-            "AfterActionStateId": 2
-        },
-        {
-            "StateId": 2,
-            "ActionId": 103,
-            "AfterActionStateId": 3
-        },
-        {
-            "StateId": 2,
-            "ActionId": 101,
-            "AfterActionStateId": 4
-        },
-        {
-            "StateId": 2,
-            "ActionId": 102,
-            "AfterActionStateId": 1
-        },
-        {
-            "StateId": 3,
-            "ActionId": 101,
-            "AfterActionStateId": 5
-        },
-        {
-            "StateId": 4,
-            "ActionId": 102,
-            "AfterActionStateId": 1
-        }
-    ]
+  "WorkFlowAction": [
+    /*{
+      "StateId": 5,
+      "ActionId": 102,
+      "AfterActionStateId": 1
+    },*/
+    {
+      "StateId": 0,
+      "ActionId": 101,
+      "AfterActionStateId": 1
+    },
+    {
+      "StateId": 1,
+      "ActionId": 103,
+      "AfterActionStateId": 2
+    },
+    {
+      "StateId": 2,
+      "ActionId": 103,
+      "AfterActionStateId": 3
+    },
+    {
+      "StateId": 2,
+      "ActionId": 101,
+      "AfterActionStateId": 4
+    },
+    {
+      "StateId": 2,
+      "ActionId": 102,
+      "AfterActionStateId": 1
+    },
+    {
+      "StateId": 3,
+      "ActionId": 101,
+      "AfterActionStateId": 5
+    },
+    {
+      "StateId": 4,
+      "ActionId": 102,
+      "AfterActionStateId": 1
+    }
+  ]
 }

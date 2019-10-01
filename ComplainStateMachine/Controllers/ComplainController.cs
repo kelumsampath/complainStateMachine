@@ -32,26 +32,6 @@ namespace ComplainStateMachine.Controllers
             complainState caseState;
             caseState = _machineState.moveTrigger(value.action);
 
-            //if (string.Compare(value.action, "forward") == 0)
-            //{
-            //    caseState = _machineState.CaseMoveForward();
-            //}else if (string.Compare(value.action, "backward") == 0)
-            //{
-            //     caseState = _machineState.CaseMoveBackward();
-            //}else if (string.Compare(value.action, "internalforward") == 0)
-            //{
-            //     caseState = _machineState.CaseForwardInternal();
-            //}
-            //else
-            //{
-            //     caseState = new complainState
-            //    {
-            //        _cState = "action false",
-            //        _newState = "action false"
-            //    };
-                
-            //}
-
             return caseState;
 
         }
